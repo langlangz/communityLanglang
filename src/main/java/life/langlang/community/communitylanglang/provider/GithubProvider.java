@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author Langlang
@@ -16,17 +17,17 @@ import java.io.IOException;
  */
 @Component
 public class GithubProvider {
-    //读取超时为60s
-    private static final long READ_TIMEOUT = 60000;
-    //写入超时为60s
-    private static final long WRITE_TIMEOUT = 60000;
-    //连接超时为60s
-    private static final long CONNECT_TIMEOUT = 60000;
+
 
     public String getAccessToken(AccessTokenDTO accessTokenDTO) {
         MediaType mediaType = MediaType.get("application/json; charset=utf-8");
 
-        OkHttpClient client = new OkHttpClient();
+        OkHttpClient client = new OkHttpClient.Builder()
+                .connectTimeout(60 * 1000, TimeUnit.MILLISECONDS)
+                .readTimeout(5 * 60 * 1000, TimeUnit.MILLISECONDS)
+                .writeTimeout(5 * 60 * 1000, TimeUnit.MILLISECONDS)
+                .build();
+
         RequestBody body =RequestBody .create(mediaType, JSON.toJSONString(accessTokenDTO));
         Request request = new Request.Builder()
                 .url("https://github.com/login/oauth/access_token")
@@ -43,7 +44,11 @@ public class GithubProvider {
     }
 
     public GithubUser getUser(String accessToken){
-        OkHttpClient client = new OkHttpClient();
+        OkHttpClient client = new OkHttpClient.Builder()
+                .connectTimeout(60 * 1000, TimeUnit.MILLISECONDS)
+                .readTimeout(5 * 60 * 1000, TimeUnit.MILLISECONDS)
+                .writeTimeout(5 * 60 * 1000, TimeUnit.MILLISECONDS)
+                .build();
         Request request = new Request.Builder()
                 .url("https://api.github.com/user")
                 .header("Authorization","token "+accessToken)
