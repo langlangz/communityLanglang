@@ -1,2 +1,2 @@
 alter table COMMENT
-    add content varchar(1024);
+    add comment_count INT DEFAULT 0;

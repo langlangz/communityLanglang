@@ -1,4 +1,4 @@
-package life.langlang.community.communitylanglang.mapper;
+package life.langlang.community.communitylanglang.dto;
 
 import life.langlang.community.communitylanglang.model.User;
 import lombok.Data;
@@ -10,13 +10,13 @@ import lombok.Data;
  */
 @Data
 public class QuestionDTO {
-    private int id;
+    private Long id;
     private String title;
     private String description;
     private String tag;
     private Long gmtCreate;
     private Long gmtModified;
-    private Integer creator;
+    private Long creator;
     private Integer viewCount;
     private Integer commentCount;
     private Integer likeCount;

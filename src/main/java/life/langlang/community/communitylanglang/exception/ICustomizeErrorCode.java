@@ -5,7 +5,7 @@ package life.langlang.community.communitylanglang.exception;
  * @description:
  * @date 2021-08-10 15:02
  */
-public interface CustomizeErrorCode {
-    String message = null;
-    
+public interface ICustomizeErrorCode {
+    String getMessage();
+    Integer getCode();
 }
